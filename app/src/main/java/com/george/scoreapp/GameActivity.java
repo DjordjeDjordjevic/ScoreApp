@@ -32,12 +32,9 @@ public class GameActivity extends AppCompatActivity {
 
 	ArrayList<Player> ALplayersGame;
 	ArrayList<Player> ALplayersSort;
-
 	int listSize;
 	int limitValue;
-
 	Player player;
-
 	InputMethodManager imm;
 
 	@Override
