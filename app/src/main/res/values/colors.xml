@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary1">#c1c1c1</color>
+
+    <color name="Red">#F44336</color>
+    <color name="Pink">#E91E63</color>
+    <color name="Purple">#9C27B0</color>
+    <color name="DeepPurple">#673AB7</color>
+    <color name="Indigo">#3F51B5</color>
+    <color name="Blue">#2196F3</color>
+    <color name="Green">#2E7D32</color>
+    <color name="Amber">#FFC107</color>
+    <color name="Orange">#FF9800</color>
+    <color name="DeepOrange">#FF5722</color>
+    <color name="Brown">#795548</color>
+    <color name="BlueGrey">#607D8B</color>
+    <color name="LightGreen">#689F38</color>
+    <color name="Cyan">#00BCD4</color>
+    <color name="Grey">#9E9E9E</color>
+
+
+
+    <integer-array name="colors">
+        <item>@color/Red</item>
+        <item>@color/Pink</item>
+        <item>@color/Purple</item>
+        <item>@color/DeepPurple</item>
+        <item>@color/Indigo</item>
+        <item>@color/Blue</item>
+        <item>@color/Green</item>
+        <item>@color/Amber</item>
+        <item>@color/Orange</item>
+        <item>@color/DeepOrange</item>
+        <item>@color/Brown</item>
+        <item>@color/BlueGrey</item>
+        <item>@color/LightGreen</item>
+        <item>@color/Cyan</item>
+        <item>@color/Grey</item>
+
+    </integer-array>
+    
+</resources>
