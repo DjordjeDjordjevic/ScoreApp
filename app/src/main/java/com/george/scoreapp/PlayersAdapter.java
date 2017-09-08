@@ -23,13 +23,6 @@ public class PlayersAdapter extends ArrayAdapter<Player> {
 
     ArrayList<Player> players;
 
-	private static class ViewHolder
-	{
-		TextView TVplayersName;
-		TextView TVscore;
-		EditText ETscoreToAdd;
-	}
-
     public PlayersAdapter(Context context, ArrayList<Player> objects) {
         super(context, 0, objects);
         this.players = objects;
@@ -40,28 +33,19 @@ public class PlayersAdapter extends ArrayAdapter<Player> {
     {
 		final Player player = getItem(pos);
 
-		final ViewHolder viewHolder;
-
-		final View view = convertView;
-
         if(convertView == null)
         {
-			viewHolder = new ViewHolder();
 			LayoutInflater inflater = LayoutInflater.from(getContext());
 			convertView = inflater.inflate(R.layout.players_text_view_with_score,null);
-			viewHolder.TVplayersName = (TextView) convertView.findViewById(R.id.TVplayersName);
-			viewHolder.TVscore = (TextView)convertView.findViewById(R.id.TVplayersScore);
-			viewHolder.ETscoreToAdd = (EditText)convertView.findViewById(R.id.ETscoreToAdd);
+			player.nameTV = (TextView) convertView.findViewById(R.id.TVplayersName);
+			player.scoreTV = (TextView)convertView.findViewById(R.id.TVplayersScore);
+			player.scoreToAddET = (EditText)convertView.findViewById(R.id.ETscoreToAdd);
 
-			convertView.setTag(viewHolder);
+			convertView.setTag(player);
         }
-        else
-		{
-			viewHolder = (ViewHolder)convertView.getTag();
-		}
 
-		viewHolder.TVplayersName.setText(player.name);
-		viewHolder.TVscore.setText(String.format("%d",player.score));
+		player.nameTV.setText(player.name);
+		player.scoreTV.setText(String.format("%d",player.score));
 
         return convertView;
     }

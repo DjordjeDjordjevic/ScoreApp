@@ -32,17 +32,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //        TESTING WITH 10 PLAYERES
-        Test(6  ,100);
+        //Test(6  ,100);
 
 		//NIJE GOTOVO!!!!
 		//VRACANJE IZ GAMEACTIVITY
-		if(getIntent().getExtras() != null)
-		{
-			limitValue = Integer.parseInt(getIntent().getStringExtra("Limit"));
-			TVlimit.setText(getIntent().getStringExtra("Limit"));
-			TVlimit.setVisibility(View.VISIBLE);
-			ETlimit.setVisibility(View.INVISIBLE);
-		}
+//		if(getIntent().getExtras() != null)
+//		{
+//			limitValue = Integer.parseInt(getIntent().getStringExtra("Limit"));
+//			TVlimit.setText(getIntent().getStringExtra("Limit"));
+//			TVlimit.setVisibility(View.VISIBLE);
+//			ETlimit.setVisibility(View.INVISIBLE);
+//		}
 
         ETlimit = (EditText)findViewById(R.id.ETlimit);
         final EditText ETplayersName = (EditText)findViewById(R.id.ETplayersName);
@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
                      }
                      else
                      {
-						 if(ALplayers.size()>=10)
+						 if(ALplayers.size()>=14)
 						 {
-							 Log.i("MainActivity", "Player size above 10");
+							 Log.i("MainActivity", "Player size above 14");
 							 ETplayersName.setText("");
 							 return true;
 						 }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.items, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 			else
 			{
 				intent = new Intent(MainActivity.this, GameActivity.class);
+
 
 
 				intent.putExtra("Limit", String.format("%d", limitValue));
