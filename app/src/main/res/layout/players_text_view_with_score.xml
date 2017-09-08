@@ -1,64 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/background_light"
-                android:focusableInTouchMode="false"
-                android:orientation="horizontal"
-                android:id="@+id/players">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/players"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@android:color/background_light"
+    android:focusableInTouchMode="false"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/TVplayersName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TVplayersScore"
-        android:layout_alignBottom="@+id/TVplayersScore"
-        android:layout_marginLeft="16dp"
-        android:layout_weight="2"
         android:ems="5"
-        android:focusable="true"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal|center"
         android:hint="Name"
-        android:singleLine="true"
-        android:textAlignment="gravity"
+        android:textAlignment="center"
         android:textSize="16sp"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"/>
 
     <TextView
         android:id="@+id/TVplayersScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="16dp"
         android:ems="5"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Score"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/ETscoreToAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="16dp"
-        android:layout_weight=".25"
         android:ems="5"
+        android:textSize="16sp"
+        android:gravity="center_vertical|center_horizontal|center"
         android:focusableInTouchMode="true"
-        android:gravity="center_vertical|center_horizontal"
-        android:hint="To add"
-        android:inputType="numberSigned"
-        android:textAlignment="center"
-        android:visibility="visible"
         android:imeOptions="actionNext"
-        />
+        android:inputType="numberSigned"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"/>
 
 
 </RelativeLayout>

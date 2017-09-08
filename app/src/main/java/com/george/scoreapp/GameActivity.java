@@ -1,40 +1,33 @@
 package com.george.scoreapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
 
-	RecyclerView recyclerView;
-	RecyclerView.Adapter adapter;
-	RecyclerView.LayoutManager layoutManager;
+	ListView LVplayers;
+
+	PlayersAdapter adapter;
+
+	Player player;
 
 	ArrayList<Player> ALplayersGame;
 	ArrayList<Player> ALplayersSort;
+
 	int listSize;
 	int limitValue;
-	Player player;
+	boolean gameOver = false;
+
 	InputMethodManager imm;
 
 	@Override
@@ -44,20 +37,15 @@ public class GameActivity extends AppCompatActivity {
 
 		Intent intent = getIntent();
 
+		LVplayers = (ListView)findViewById(R.id.LVplayers);
+
 		listSize = Integer.parseInt(intent.getStringExtra("NumberOfPlayers"));
 		limitValue = Integer.parseInt(intent.getStringExtra("Limit"));
-
-		recyclerView = (RecyclerView)findViewById(R.id.LVplayersGame);
-		recyclerView.setHasFixedSize(true);
 
 		ALplayersGame = new ArrayList<>();
 		ALplayersSort = new ArrayList<>();
 
-		layoutManager = new LinearLayoutManager(this);
-
-		recyclerView.setLayoutManager(layoutManager);
-		adapter = new RecyclerViewAdapter(ALplayersGame);
-
+		adapter = new PlayersAdapter(this,ALplayersGame);
 
 		imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -65,13 +53,50 @@ public class GameActivity extends AppCompatActivity {
 		Log.i("GameActivity", "Limit value: " + limitValue);
 
 		for (int i = 0; i < listSize; i++) {
-			player = new Player(intent.getStringExtra("Player" + i));
+			player = new Player(intent.getStringExtra("Player" + i), limitValue);//,(TextView) recyclerView.getChildAt(i).findViewById(R.id.TVplayersName), (EditText) recyclerView.getChildAt(i).findViewById(R.id.ETscoreToAdd),(TextView) recyclerView.getChildAt(i).findViewById(R.id.TVplayersScore));
 
-			player.setLimit(limitValue);
 
 			ALplayersGame.add(i, player);
-			Log.i("GameActivity", "Player added");
+			Log.i("GameActivity", "Player "+player.name+" added");
+			Log.i("GameActivity", "Limit  "+limitValue);
 		}
-		recyclerView.setAdapter(adapter);
+		LVplayers.setAdapter(adapter);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_game,menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.BTNadd)
+		{
+			//Provera da li je unesena vrednost za dodavanje
+			for(int i=0;i<ALplayersGame.size();i++)
+			{
+				if(adapter.getItem(i).isEmpty())
+				{
+					Log.i("ERROR", "Player has no text to add");
+					adapter.getItem(i).scoreToAddET.requestFocus();
+					return super.onOptionsItemSelected(item);
+				}
+			}
+			for(int i=0;i<ALplayersGame.size();i++)
+			{
+				adapter.getItem(i).setScore();
+
+				//Provera da li je igrac izgubio
+				Log.i("GAME OVER", ""+adapter.getItem(i).isGameOver());
+				if(adapter.getItem(i).isGameOver())
+					gameOver = true;
+			}
+
+			if(gameOver)
+				Log.i("GAME OVER", "GAME OVER");
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }
