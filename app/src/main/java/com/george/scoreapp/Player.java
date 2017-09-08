@@ -1,5 +1,6 @@
 package com.george.scoreapp;
 
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -10,51 +11,51 @@ import android.widget.TextView;
 public class Player {
 
     public String name;
-    public int score = 0;
-    int limit = 0;
+    public int score;
+    int limit;
 
-    boolean available = true;
+    TextView nameTV;
+    EditText scoreToAddET;
+    TextView scoreTV;
 
-    public Player(String name)
+    public Player(String name, int limit)
     {
         this.name = name;
+        this.limit = limit;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public String getName() {
-        return name;
+    public void setScore() {
+        Log.i("Value to add", scoreToAddET.getText().toString());
+        score += Integer.parseInt(scoreToAddET.getText().toString());
+        scoreTV.setText(String.valueOf(score));
+        scoreToAddET.setText("");
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public String getName() {
+        return name;
     }
-
-    public int getLimit() {
-        return limit;
-    }
-
-
 
     public void resetScore()
     {
         score = 0;
+        scoreTV.setText("0");
     }
 
-    public void addToScore(int value)
+    public boolean isGameOver()
     {
-        score = score + value;
+        if(score > limit)
+            return true;
+        else
+        return false;
     }
-
-    boolean isGameOver()
+    boolean isEmpty()
     {
-        if(score >= limit) return true;
-        else return false;
+        if(scoreToAddET.getText().toString().isEmpty())
+            return true;
+        return false;
     }
 }
