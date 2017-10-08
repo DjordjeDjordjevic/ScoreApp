@@ -40,6 +40,7 @@ public class Player {
         return name;
     }
 
+
     public void resetScore()
     {
         score = 0;
