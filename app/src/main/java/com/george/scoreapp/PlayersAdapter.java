@@ -1,16 +1,11 @@
 package com.george.scoreapp;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,7 +31,7 @@ public class PlayersAdapter extends ArrayAdapter<Player> {
         if(convertView == null)
         {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
-			convertView = inflater.inflate(R.layout.players_text_view_with_score,null);
+			convertView = inflater.inflate(R.layout.players_text_view_score_to_add,null);
 			player.nameTV = (TextView) convertView.findViewById(R.id.TVplayersName);
 			player.scoreTV = (TextView)convertView.findViewById(R.id.TVplayersScore);
 			player.scoreToAddET = (EditText)convertView.findViewById(R.id.ETscoreToAdd);

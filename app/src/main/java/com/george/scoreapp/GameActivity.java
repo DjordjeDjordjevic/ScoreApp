@@ -1,5 +1,7 @@
 package com.george.scoreapp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
 		return true;
 	}
 
+	//Dugme za dodavanje rezultata
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.BTNadd)
@@ -79,23 +82,32 @@ public class GameActivity extends AppCompatActivity {
 			{
 				if(adapter.getItem(i).isEmpty())
 				{
+					//Ako igrac nema vrednost za dodavanje
+					//EditText tog igraca dobija fokus
 					Log.i("ERROR", "Player has no text to add");
 					adapter.getItem(i).scoreToAddET.requestFocus();
 					return super.onOptionsItemSelected(item);
 				}
 			}
+
+			//Prolazimo kroz sve igrace i pozivamo funkciju dodavanja rezultata
 			for(int i=0;i<ALplayersGame.size();i++)
 			{
 				adapter.getItem(i).setScore();
 
-				//Provera da li je igrac izgubio
-				Log.i("GAME OVER", ""+adapter.getItem(i).isGameOver());
+				//Provera da li je igrac prekoracio granicu igre
 				if(adapter.getItem(i).isGameOver())
 					gameOver = true;
 			}
 
+			//TODO
+			//Postavnjanje menija za resetovanje rezultata ili za vracanje na predhodni meni
 			if(gameOver)
-				Log.i("GAME OVER", "GAME OVER");
+            {
+                Log.i("GAME OVER", "GAME OVER");
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+
+            }
 		}
 		return super.onOptionsItemSelected(item);
 	}

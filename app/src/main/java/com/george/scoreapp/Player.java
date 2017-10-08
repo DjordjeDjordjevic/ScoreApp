@@ -24,6 +24,7 @@ public class Player {
         this.limit = limit;
     }
 
+    //Postavljanje novog rezultata
     public void setScore() {
         Log.i("Value to add", scoreToAddET.getText().toString());
         score += Integer.parseInt(scoreToAddET.getText().toString());
@@ -45,13 +46,16 @@ public class Player {
         scoreTV.setText("0");
     }
 
+    //Provera da li je ukupan rezultat veci ili jednak od granice do koje se igra
     public boolean isGameOver()
     {
-        if(score > limit)
+        if(score >= limit)
             return true;
         else
         return false;
     }
+
+    //Provera da li je EditText za unos novog rezultata prazan
     boolean isEmpty()
     {
         if(scoreToAddET.getText().toString().isEmpty())
