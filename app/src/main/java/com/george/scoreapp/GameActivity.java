@@ -38,8 +38,6 @@ public class GameActivity extends AppCompatActivity {
 
 	InputMethodManager imm;
 
-    AlertDialog.Builder builder;
-    View listView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,10 +54,6 @@ public class GameActivity extends AppCompatActivity {
 		ALplayersSort = new ArrayList<>();
 
 		adapter = new PlayersAdapter(this,ALplayersGame);
-
-        builder = new AlertDialog.Builder(GameActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        listView = inflater.inflate(R.layout.game_over_dialog_list_view, null);
 
 		imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -114,44 +108,33 @@ public class GameActivity extends AppCompatActivity {
 			//Postavnjanje menija za resetovanje rezultata ili za vracanje na predhodni meni
 			if(gameOver)
             {
+                adapter.getItem(1).scoreTV.setText("0");
                 Log.i("GAME OVER", "GAME OVER");
-
-
-                builder.setTitle("Game Over");
-                builder.setView(listView);
-
-                LVplayersGameOver = (ListView)listView.findViewById(R.id.LVplayersGameOver);
-                adapterGameOver = new GameOverDialogAdapter(this, ALplayersGame);
-                LVplayersGameOver.setAdapter(adapterGameOver);
-
-                builder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int j) {
-                        //Restartovanje rezultata
-                        for(int i=0;i<ALplayersGame.size();i++)
-                        {
-                            Log.i("Payer "+adapterGameOver.getItem(i).name, "Score: "+adapterGameOver.getItem(i).score);
-                            adapter.getItem(i).resetScore();
-//                            Log.i("Payer "+adapterGameOver.getItem(i).name, "Score: "+adapterGameOver.getItem(i).score);
-                            Log.i("Payer "+adapter.getItem(i).name, "Score: "+adapter.getItem(i).score);
-                            Log.i("Payer "+adapter.getItem(i).name, "Score: "+adapter.getItem(i).scoreTV.getText().toString());
-                            gameOver = false;
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-                builder.setNegativeButton("Main menu", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //Vracanje u glavni meni
-                    }
-                });
-                builder.show();
-                for(int i=0;i<ALplayersGame.size();i++)
-                adapter.getItem(i).resetScore();
+                AlertDialog dialog = GameOverDialog();
+                dialog.show();
 
             }
         }
 		return super.onOptionsItemSelected(item);
 	}
+	public AlertDialog GameOverDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        LayoutInflater inflater = GameActivity.this.getLayoutInflater();
+
+        ListView LVgameOver = (ListView) inflater.inflate(R.layout.game_over_dialog_list_view, null);
+        adapterGameOver = new GameOverDialogAdapter(this, ALplayersGame);
+        LVgameOver.setAdapter(adapterGameOver);
+        builder.setTitle("Game over")
+                .setView(LVgameOver)
+                .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        for(int j=0;j<ALplayersGame.size();j++)
+                            adapter.getItem(j).resetScore();
+                    }
+                });
+        adapter.notifyDataSetChanged();
+        return builder.create();
+    }
 }
