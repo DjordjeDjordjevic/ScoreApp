@@ -17,6 +17,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
@@ -104,7 +107,6 @@ public class GameActivity extends AppCompatActivity {
 					gameOver = true;
 			}
 
-			//TODO
 			//Postavnjanje menija za resetovanje rezultata ili za vracanje na predhodni meni
 			if(gameOver)
             {
@@ -119,22 +121,38 @@ public class GameActivity extends AppCompatActivity {
 	}
 	public AlertDialog GameOverDialog()
     {
+        ALplayersSort = (ArrayList<Player>) ALplayersGame.clone();
+
+        Collections.sort(ALplayersSort, new Comparator<Player>() {
+            @Override
+            public int compare(Player p1, Player p2) {
+                return p2.score - p1.score;
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
         LayoutInflater inflater = GameActivity.this.getLayoutInflater();
 
         ListView LVgameOver = (ListView) inflater.inflate(R.layout.game_over_dialog_list_view, null);
-        adapterGameOver = new GameOverDialogAdapter(this, ALplayersGame);
+        adapterGameOver = new GameOverDialogAdapter(this, ALplayersSort);
         LVgameOver.setAdapter(adapterGameOver);
         builder.setTitle("Game over")
                 .setView(LVgameOver)
                 .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        for(int j=0;j<ALplayersGame.size();j++)
-                            adapter.getItem(j).resetScore();
+                        //Resetovanje aktivnosti
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Main menu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
                     }
                 });
-        adapter.notifyDataSetChanged();
         return builder.create();
     }
 }
