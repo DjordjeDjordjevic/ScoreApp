@@ -1,7 +1,6 @@
 package com.george.scoreapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,20 +11,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
 	ListView LVplayers;
-    ListView LVplayersGameOver;
 
 	PlayersAdapter adapter;
     GameOverDialogAdapter adapterGameOver;
