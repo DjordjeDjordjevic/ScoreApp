@@ -44,18 +44,6 @@ class Player {
         return score;
     }
 
-    void setScore(int score) {
-        this.score = score;
-    }
-
-   int getLimit() {
-        return limit;
-    }
-
-    void setLimit(int limit) {
-        this.limit = limit;
-    }
-
     TextView getNameTV() {
         return nameTV;
     }
