@@ -32,7 +32,6 @@ class Player {
         scoreToAddET.setText("");
     }
 
-    //Getter Setter
     public void setName(String name) {
         this.name = name;
     }
