@@ -19,51 +19,49 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> ALplayers = new ArrayList<String>();
-    ArrayAdapter<String> ALplayersAdapter;
+    ArrayList<String> ALplayers = new ArrayList<String>();		//Lista sa imenima igraca
+    ArrayAdapter<String> ALplayersAdapter;					//Adapter za popunjavanje ListView sa imenima igraca
 
-	int limitValue = 0;
-	EditText ETlimit;
-	TextView TVlimit;
-    public Intent intent = new Intent();
-    @Override
+	int limitValue = 0;				//Granica do koliko se igra
+	EditText ETlimit;				//EditText u koji unosimo vrednost granice
+	TextView TVlimit;				//TextView koji pokazuje koja je vednost granice
+	EditText ETplayersName;			//EditText u koji unosimo imena igraca
+	ListView LVplayers;				//ListView za prikazivanje liste imena igraca
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        TESTING WITH 10 PLAYERES
-        //Test(6  ,100);
-
-		//NIJE GOTOVO!!!!
-		//VRACANJE IZ GAMEACTIVITY
-//		if(getIntent().getExtras() != null)
-//		{
-//			limitValue = Integer.parseInt(getIntent().getStringExtra("Limit"));
-//			TVlimit.setText(getIntent().getStringExtra("Limit"));
-//			TVlimit.setVisibility(View.VISIBLE);
-//			ETlimit.setVisibility(View.INVISIBLE);
-//		}
-
         ETlimit = (EditText)findViewById(R.id.ETlimit);
-        final EditText ETplayersName = (EditText)findViewById(R.id.ETplayersName);
+        ETplayersName = (EditText)findViewById(R.id.ETplayersName);
 
 		TVlimit = (TextView)findViewById(R.id.TVlimit);
 
-        final ListView LVplayers = (ListView)findViewById(R.id.LVplayers);
+        LVplayers = (ListView)findViewById(R.id.LVplayers);
         ALplayersAdapter = new ArrayAdapter<String>(this, R.layout.players_text_view,R.id.TVplayersName, ALplayers);
         LVplayers.setAdapter(ALplayersAdapter);
 
-		ETlimit.setOnKeyListener(new View.OnKeyListener() {
+		ETlimit.setOnKeyListener(new View.OnKeyListener()
+		{
 			@Override
-			public boolean onKey(View view, int keyCode, KeyEvent event) {
+			public boolean onKey(View view, int keyCode, KeyEvent event)
+			{
+				//Proveravamo da li je pritisnut Enter dok je EditText u fokusu
 				if((event.getAction()==KeyEvent.ACTION_DOWN) &&
 						keyCode == KeyEvent.KEYCODE_ENTER)
 				{
+					//Proveravamo da li je EditText prazan
+					//Ako jeste ispisujemo obavestenje da je EditText prazan i izlazimo iz funkcije
 					if(ETlimit.getText().toString().equals(""))
 					{
 						Log.i("MainActivity","EditText limit is empty");
 						return true;
 					}
+					//Ako EditText nije prazan
+					//Cuvamo vrednost EditText u promenljivoj limitValue
+					//Menjamo tekst TVlimit u vrednost promenljive limitValue
+					//Prikazujemo TVlimit i krijemo ETlimit
 					else
 					{
 						limitValue = Integer.parseInt(ETlimit.getText().toString());
@@ -72,12 +70,14 @@ public class MainActivity extends AppCompatActivity {
 						TVlimit.setText(String.format("%d", limitValue));
 						TVlimit.setVisibility(View.VISIBLE);
 						ETlimit.setVisibility(View.INVISIBLE);
-
 					}
 				}
 				return false;
 			}
 		});
+		//Kada kliknemo na TVlimit
+		//Prikazujemo ETlimit za ponovno unosenje granice
+		//Krijemo TVlimit
 		TVlimit.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -87,28 +87,34 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-
-         ETplayersName.setOnKeyListener(new View.OnKeyListener() {
+		ETplayersName.setOnKeyListener(new View.OnKeyListener() {
              public boolean onKey(View v, int keyCode, KeyEvent event)
              {
+				 //Proveravamo da li je pritisnut Enter dok je EditText u fokusu
                  if((event.getAction()==KeyEvent.ACTION_DOWN) &&
                          keyCode == KeyEvent.KEYCODE_ENTER)
                  {
+					 //Proveravamo da li je EditText prazan
+					 //Ako jeste ispisujemo obavestenje da je EditText prazan i izlazimo iz funkcije
                      if(ETplayersName.getText().toString().equals(""))
                      {
                          Log.i("MainActivity", "EditText player name has no text");
-
+						 return true;
                      }
+                     //Ako EditText nije prazan
                      else
                      {
-						 if(ALplayers.size()>=14)
+						 //Proveravamo da li je prekoracen broj igraca
+						 if(ALplayers.size()>=10)
 						 {
-							 Log.i("MainActivity", "Player size above 14");
+							 Log.i("MainActivity", "Player size above 10");
 							 ETplayersName.setText("");
 							 return true;
 						 }
-                         String name = ETplayersName.getText().toString();
-                         ALplayers.add(name);
+
+						 //U listu igraca dodajemo igraca sa imenom iz EditTexta
+						 //Obavestavamo adapter o promenama i brisemo tekst iz EditTexta
+                         ALplayers.add(ETplayersName.getText().toString());
                          ALplayersAdapter.notifyDataSetChanged();
                          ETplayersName.setText("");
 						 ETplayersName.requestFocus();
@@ -118,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
              }
          });
 
+		//Dugi klik na ime igraca brise igraca iz liste igraca
 		LVplayers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -144,52 +151,52 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
+    public boolean onOptionsItemSelected(MenuItem item)
+	{
+		Intent intent;
+		//Proveravamo da li je pritisnuto Next dugme
         if(item.getItemId() == R.id.BTnext)
         {
-			if(limitValue == 0 || ALplayers.size() < 2)
+			if(limitValue == 0 )
 			{
 				ETlimit.requestFocus();
 			}
+			//Pravimo intent ka GameActivity
+			//Prosledjujemo granicu, broj igraca i imena igraca
 			else
 			{
 				intent = new Intent(MainActivity.this, GameActivity.class);
-
-
-
 				intent.putExtra("Limit", String.format("%d", limitValue));
 				intent.putExtra("NumberOfPlayers", String.format("%d", ALplayers.size()));
-				Log.i("MainActivity", "Number of players sent with intent " + intent.getStringExtra("NumberOfPlayers"));
 
+				Log.i("MainActivity", "Number of players sent with intent " + intent.getStringExtra("NumberOfPlayers"));
 
 				for (int i= 0 ; i<ALplayers.size(); i++)
 				{
-					//String code = "Player"+i;
 					intent.putExtra(String.format("Player%d", i), ALplayers.get(i));
 					Log.i(String.format("Player%d", i), "" + intent.getStringExtra(String.format("Player%d", i)));
 				}
-
 				startActivity(intent);
 			}
 
         }
         return super.onOptionsItemSelected(item);
     }
-
-	public void Test(int numberOfPlayers, int limit )
-    {
-        int players = numberOfPlayers;
-        intent = new Intent(MainActivity.this, GameActivity.class);
-
-        intent.putExtra("NumberOfPlayers", Integer.toString(players));
-		intent.putExtra("Limit", Integer.toString(limit));
-
-        for(int i = 0; i<players; i++)
-        {
-            intent.putExtra(String.format("Player%d", i),  String.format("Player %d", i));
-        }
-
-        startActivity(intent);
-    }
+//Testing
+//	public void Test(int numberOfPlayers, int limit )
+//    {
+//		Intent intent;
+//        int players = numberOfPlayers;
+//        intent = new Intent(MainActivity.this, GameActivity.class);
+//
+//        intent.putExtra("NumberOfPlayers", Integer.toString(players));
+//		intent.putExtra("Limit", Integer.toString(limit));
+//
+//        for(int i = 0; i<players; i++)
+//        {
+//            intent.putExtra(String.format("Player%d", i),  String.format("Player %d", i));
+//        }
+//
+//        startActivity(intent);
+//    }
 }
