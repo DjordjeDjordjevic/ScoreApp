@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ScoreApp</string>
+    <string name="limit">Limit</string>
+    <string name="player_name">Player name</string>
 </resources>
