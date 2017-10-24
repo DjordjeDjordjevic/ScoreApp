@@ -14,8 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,21 +43,17 @@ public class MainActivity extends AppCompatActivity {
         ALplayersAdapter = new ArrayAdapter<String>(this, R.layout.players_text_view,R.id.TVplayersName, ALplayers);
         LVplayers.setAdapter(ALplayersAdapter);
 
-		ETlimit.setOnKeyListener(new View.OnKeyListener()
-		{
+		ETlimit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
-			public boolean onKey(View view, int keyCode, KeyEvent event)
-			{
-				//Proveravamo da li je pritisnut Enter dok je EditText u fokusu
-				if((event.getAction()==KeyEvent.ACTION_DOWN) &&
-						keyCode == KeyEvent.KEYCODE_ENTER)
+			public void onFocusChange(View view, boolean b) {
+				if(!view.hasFocus())
 				{
 					//Proveravamo da li je EditText prazan
 					//Ako jeste ispisujemo obavestenje da je EditText prazan i izlazimo iz funkcije
 					if(ETlimit.getText().toString().equals(""))
 					{
 						Log.i("MainActivity","EditText limit is empty");
-						return true;
+						return;
 					}
 					//Ako EditText nije prazan
 					//Cuvamo vrednost EditText u promenljivoj limitValue
@@ -72,9 +69,41 @@ public class MainActivity extends AppCompatActivity {
 						ETlimit.setVisibility(View.INVISIBLE);
 					}
 				}
-				return false;
 			}
 		});
+//		ETlimit.setOnKeyListener(new View.OnKeyListener()
+//		{
+//			@Override
+//			public boolean onKey(View view, int keyCode, KeyEvent event)
+//			{
+//				//Proveravamo da li je pritisnut Enter dok je EditText u fokusu
+//				if((event.getAction()==KeyEvent.ACTION_DOWN) &&
+//						keyCode == KeyEvent.KEYCODE_ENTER)
+//				{
+//					//Proveravamo da li je EditText prazan
+//					//Ako jeste ispisujemo obavestenje da je EditText prazan i izlazimo iz funkcije
+//					if(ETlimit.getText().toString().equals(""))
+//					{
+//						Log.i("MainActivity","EditText limit is empty");
+//						return true;
+//					}
+//					//Ako EditText nije prazan
+//					//Cuvamo vrednost EditText u promenljivoj limitValue
+//					//Menjamo tekst TVlimit u vrednost promenljive limitValue
+//					//Prikazujemo TVlimit i krijemo ETlimit
+//					else
+//					{
+//						limitValue = Integer.parseInt(ETlimit.getText().toString());
+//						Log.i("MainActivity",String.format("Limit value: %d",limitValue));
+//
+//						TVlimit.setText(String.format("%d", limitValue));
+//						TVlimit.setVisibility(View.VISIBLE);
+//						ETlimit.setVisibility(View.INVISIBLE);
+//					}
+//				}
+//				return false;
+//			}
+//		});
 		//Kada kliknemo na TVlimit
 		//Prikazujemo ETlimit za ponovno unosenje granice
 		//Krijemo TVlimit
