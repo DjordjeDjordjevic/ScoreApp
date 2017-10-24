@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         ALplayersAdapter = new ArrayAdapter<String>(this, R.layout.players_text_view,R.id.TVplayersName, ALplayers);
         LVplayers.setAdapter(ALplayersAdapter);
 
+		//Kada izgubimo fokus sa ETlimit
+		//Dodajemo vrednost iz ETlimit u TVlimit
 		ETlimit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View view, boolean b) {
